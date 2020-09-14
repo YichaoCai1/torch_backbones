@@ -1,0 +1,18 @@
+# paths
+train_path: dataset/train
+test_path: dataset/test
+ckpt_path: ckpts
+
+# classes
+classes:
+  - A
+  - B
+
+# taining parameters
+learning_rate: 0.01
+input_size: 224
+train_batch_size: 32
+test_batch_size: 8
+epochs: 200
+train_steps: 60
+test_steps: 25
