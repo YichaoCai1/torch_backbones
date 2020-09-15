@@ -44,7 +44,7 @@ class DenseNet(nn.Module):
         super(DenseNet, self).__init__()
         # params
         self.layers = layers
-        self.k = kgit
+        self.k = k
         self.theta = theta
         # layers
         self.conv = BN_Conv2d(3, 2*k, 7, 2, 3)
@@ -110,4 +110,4 @@ def test():
     y = net(x)
     print(y.shape)
 
-test()
+# test()

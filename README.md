@@ -16,12 +16,14 @@
   · Inception series
 
   · ResNeXt
+  
+  · DenseNet
 
 - **More backbones may be added later**.
 
 - **A training script is supplied in “train.py”，the arguments are in “utils/args.yml"**.
 
-- **I wrote some blogs about this project（which is in Chinese）**：
+- **I wrote some blogs about this project（which are in Chinese）**：
 
   · VGG:  https://blog.csdn.net/EasonCcc/article/details/108501384
 
@@ -29,6 +31,8 @@
 
   · Inception-v1，Inception-v2，Inception-v3：https://blog.csdn.net/EasonCcc/article/details/108521180
 
-  · Inception-v4，Inception-ResNet-v1，Inception-ResNet-v2：https://blog.csdn.net/EasonCcc/article/details/108540687
+  · Inception-v4，Inception-ResNet：https://blog.csdn.net/EasonCcc/article/details/108540687
 
   · ResNeXt: https://blog.csdn.net/EasonCcc/article/details/108580508
+  
+  · DenseNet: https://blog.csdn.net/EasonCcc/article/details/108602022
