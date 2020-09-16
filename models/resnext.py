@@ -86,13 +86,12 @@ def resNeXt101_64x4d(num_classes=1000):
     return ResNeXt([3, 4, 23, 3], 64, 4, num_classes)
 
 
-# def test():
-#     # net = resNeXt50_32x4d()
-#     net = resNeXt101_32x4d()
-#     # net = resNeXt101_64x4d()
-#     summary(net, (3, 224, 224))
-#
-#
+def test():
+    # net = resNeXt50_32x4d()
+    net = resNeXt101_32x4d()
+    # net = resNeXt101_64x4d()
+    summary(net, (3, 224, 224))
+
 # test()
 
 
