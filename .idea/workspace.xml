@@ -20,9 +20,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eda9c890-e69d-4d4f-bc8a-fbf35db70d56" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/models/dpn.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/SE_block.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/relu_test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/inception_v4_resnet.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/inception_v4_resnet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/resnet.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/resnet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/resnext.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/resnext.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

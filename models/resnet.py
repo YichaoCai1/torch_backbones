@@ -7,6 +7,7 @@ An unofficial implementation of resnet with pytorch
 import torch.nn as nn
 import torch.nn.functional as F
 from torchsummary import summary
+from SE_block import SE
 
 
 class BasicBlock(nn.Module):
@@ -15,11 +16,14 @@ class BasicBlock(nn.Module):
     """
     message = "basic"
 
-    def __init__(self, in_channels, out_channels, strides):
+    def __init__(self, in_channels, out_channels, strides, is_se=False):
         super(BasicBlock, self).__init__()
+        self.is_se = is_se
         self.conv1 = nn.Conv2d(in_channels, out_channels, 3, stride=strides, padding=1, bias=False)  # same padding
         self.conv2 = nn.Conv2d(out_channels, out_channels, 3, stride=1, padding=1, bias=False)
         self.bn = nn.BatchNorm2d(out_channels)
+        if self.is_se:
+            self.se = SE(out_channels, 16)
 
         # fit input with residual output
         self.short_cut = nn.Sequential()
@@ -35,6 +39,9 @@ class BasicBlock(nn.Module):
         out = F.relu(out)
         out = self.conv2(out)
         out = self.bn(out)
+        if self.is_se:
+            coefficient = self.se(out)
+            out *= coefficient
         out += self.short_cut(x)
         return F.relu(out)
 
@@ -45,13 +52,16 @@ class BottleNeck(nn.Module):
     """
     message = "bottleneck"
 
-    def __init__(self, in_channels, out_channels, strides):
+    def __init__(self, in_channels, out_channels, strides, is_se=False):
         super(BottleNeck, self).__init__()
+        self.is_se = is_se
         self.conv1 = nn.Conv2d(in_channels, out_channels, 1, stride=1, padding=0, bias=False)  # same padding
         self.conv2 = nn.Conv2d(out_channels, out_channels, 3, stride=strides, padding=1, bias=False)
         self.conv3 = nn.Conv2d(out_channels, out_channels * 4, 1, stride=1, padding=0, bias=False)
         self.bn1 = nn.BatchNorm2d(out_channels)
         self.bn2 = nn.BatchNorm2d(out_channels * 4)
+        if self.is_se:
+            self.se = SE(out_channels * 4, 16)
 
         # fit input with residual output
         self.shortcut = nn.Sequential(
@@ -68,6 +78,9 @@ class BottleNeck(nn.Module):
         out = F.relu(out)
         out = self.conv3(out)
         out = self.bn2(out)
+        if self.is_se:
+            coefficient = self.se(out)
+            out *= coefficient
         out += self.shortcut(x)
         return F.relu(out)
 
@@ -77,10 +90,11 @@ class ResNet(nn.Module):
     building ResNet_34
     """
 
-    def __init__(self, block: object, groups: object, num_classes=1000) -> object:
+    def __init__(self, block: object, groups: object, num_classes, is_se=False) -> object:
         super(ResNet, self).__init__()
         self.channels = 64  # out channels from the first convolutional layer
         self.block = block
+        self.is_se = is_se
 
         self.conv1 = nn.Conv2d(3, self.channels, 7, stride=2, padding=3, bias=False)
         self.bn = nn.BatchNorm2d(self.channels)
@@ -105,7 +119,7 @@ class ResNet(nn.Module):
         conv_x = nn.Sequential()
         for i in range(len(list_strides)):
             layer_name = str("block_%d_%d" % (index, i))  # when use add_module, the name should be difference.
-            conv_x.add_module(layer_name, self.block(self.channels, channels, list_strides[i]))
+            conv_x.add_module(layer_name, self.block(self.channels, channels, list_strides[i], self.is_se))
             self.channels = channels if self.block.message == "basic" else channels * 4
         return conv_x
 
@@ -143,12 +157,18 @@ def ResNet_152(num_classes=1000):
     return ResNet(block=BottleNeck, groups=[3, 8, 36, 3], num_classes=num_classes)
 
 
+def ResNet_50_SE(num_classes=1000):
+    return ResNet(block=BottleNeck, groups=[3, 4, 6, 3], num_classes=num_classes, is_se=True)
+
+
 def test():
     # net = ResNet_18()
     # net = ResNet_34()
-    net = ResNet_50()
+    # net = ResNet_50()
     # net = ResNet_101()
     # net = ResNet_152()
+    net = ResNet_50_SE()
+    # net = ResNet_50()
     summary(net, (3, 224, 224))
 
 

@@ -16,7 +16,7 @@ class Inception(nn.Module):
     implementation of Inception-v4, Inception-ResNet-v1, Inception-ResNet-v2
     """
 
-    def __init__(self, version, num_classes):
+    def __init__(self, version, num_classes, is_se=False):
         super(Inception, self).__init__()
         self.version = version
         self.stem = Stem_Res1() if self.version == "res1" else Stem_v4_Res2()
