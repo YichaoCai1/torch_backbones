@@ -7,23 +7,11 @@
 
   · torchsummary
 
-- **Includes**：
-
-  · VGG
-
-  · ResNet
-
-  · Inception series
-
-  · ResNeXt
-  
-  · DenseNet
-
 - **More backbones may be added later**.
 
 - **A training script is supplied in “train.py”，the arguments are in “utils/args.yml"**.
 
-- **I wrote some blogs about this project（which are in Chinese）**：
+- **I wrote some blogs（which are in Chinese） to introduce the models implemented in this project**：
 
   · VGG:  https://blog.csdn.net/EasonCcc/article/details/108501384
 
@@ -36,3 +24,6 @@
   · ResNeXt: https://blog.csdn.net/EasonCcc/article/details/108580508
   
   · DenseNet: https://blog.csdn.net/EasonCcc/article/details/108602022
+   
+  · DPN：https://blog.csdn.net/EasonCcc/article/details/108627421
+  
