@@ -7,7 +7,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torchsummary import summary
-from inception_blocks import BN_Conv2d
+from models.inception_blocks import BN_Conv2d
 
 class DPN_Block(nn.Module):
     """
@@ -112,10 +112,10 @@ def dpn_131_40_4d(num_classes=1000):
                num_classes=num_classes)
 
 
-def test():
-    # net = dpn_92_32x3d()
-    net = dpn_98_40x4d()
-    # net = dpn_131_40_4d()
-    summary(net, (3, 224, 224))
-
-test()
+# def test():
+#     # net = dpn_92_32x3d()
+#     net = dpn_98_40x4d()
+#     # net = dpn_131_40_4d()
+#     summary(net, (3, 224, 224))
+#
+# test()

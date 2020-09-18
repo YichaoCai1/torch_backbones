@@ -9,7 +9,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torchsummary import summary
-from inception_blocks import BN_Conv2d
+from models.inception_blocks import BN_Conv2d
 
 class Block_bank(nn.Module):
     """
@@ -210,9 +210,9 @@ def inception_v3(num_classes=1000):
     return Inception_v3(num_classes)
 
 
-def test():
-    net = inception_v3()
-    summary(net, (3, 299, 299))
-
-
-test()
+# def test():
+#     net = inception_v3()
+#     summary(net, (3, 299, 299))
+#
+#
+# test()

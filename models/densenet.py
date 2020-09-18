@@ -8,7 +8,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torchsummary import summary
-from inception_blocks import BN_Conv2d
+from models.inception_blocks import BN_Conv2d
 
 
 class DenseBlock(nn.Module):
@@ -103,11 +103,11 @@ def densenet_264(num_classes=1000):
     return DenseNet([6, 12, 64, 48], k=32, theta=0.5, num_classes=num_classes)
 
 
-def test():
-    net = densenet_264()
-    summary(net, (3, 224, 224))
-    x = torch.randn((2, 3, 224, 224))
-    y = net(x)
-    print(y.shape)
-
-# test()
+# def test():
+#     net = densenet_264()
+#     summary(net, (3, 224, 224))
+#     x = torch.randn((2, 3, 224, 224))
+#     y = net(x)
+#     print(y.shape)
+#
+# # test()

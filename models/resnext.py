@@ -6,8 +6,8 @@ An unofficial implementation of ResNeXt with pytorch
 import torch.nn as nn
 import torch.nn.functional as F
 from torchsummary import summary
-from inception_blocks import BN_Conv2d
-from SE_block import SE
+from models.inception_blocks import BN_Conv2d
+from models.SE_block import SE
 
 class ResNeXt_Block(nn.Module):
     """
@@ -97,14 +97,14 @@ def resNeXt101_64x4d(num_classes=1000):
 def resNeXt50_32x4d_SE(num_classes=1000):
     return ResNeXt([3, 4, 6, 3], 32, 4, num_classes, is_se=True)
 
-def test():
-    # net = resNeXt50_32x4d()
-    # net = resNeXt101_32x4d()
-    # net = resNeXt101_64x4d()
-    net = resNeXt50_32x4d_SE()
-    summary(net, (3, 224, 224))
-
-test()
+# def test():
+#     # net = resNeXt50_32x4d()
+#     # net = resNeXt101_32x4d()
+#     # net = resNeXt101_64x4d()
+#     net = resNeXt50_32x4d_SE()
+#     summary(net, (3, 224, 224))
+#
+# test()
 
 
 

@@ -8,7 +8,7 @@ Inception-ResNet-v1, Inception-ResNet-v2 with pytorch
 import torch.nn as nn
 import torch.nn.functional as F
 from torchsummary import summary
-from inception_blocks import *
+from models.inception_blocks import *
 
 
 class Inception(nn.Module):
@@ -115,12 +115,12 @@ def inception_resnet_v2(classes=1000):
     return Inception("res2", classes)
 
 
-def test():
-    net = inception_v4()
-    # net = inception_resnet_v1()
-    # net = inception_resnet_v2()
-    summary(net, (3, 299, 299))
-
-test()
+# def test():
+#     net = inception_v4()
+#     # net = inception_resnet_v1()
+#     # net = inception_resnet_v2()
+#     summary(net, (3, 299, 299))
+#
+# test()
 
 

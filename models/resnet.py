@@ -7,7 +7,7 @@ An unofficial implementation of resnet with pytorch
 import torch.nn as nn
 import torch.nn.functional as F
 from torchsummary import summary
-from SE_block import SE
+from models.SE_block import SE
 
 
 class BasicBlock(nn.Module):
@@ -161,15 +161,15 @@ def ResNet_50_SE(num_classes=1000):
     return ResNet(block=BottleNeck, groups=[3, 4, 6, 3], num_classes=num_classes, is_se=True)
 
 
-def test():
-    # net = ResNet_18()
-    # net = ResNet_34()
-    # net = ResNet_50()
-    # net = ResNet_101()
-    # net = ResNet_152()
-    net = ResNet_50_SE()
-    # net = ResNet_50()
-    summary(net, (3, 224, 224))
-
-
-test()
+# def test():
+#     # net = ResNet_18()
+#     # net = ResNet_34()
+#     # net = ResNet_50()
+#     # net = ResNet_101()
+#     # net = ResNet_152()
+#     net = ResNet_50_SE()
+#     # net = ResNet_50()
+#     summary(net, (3, 224, 224))
+#
+#
+# test()

@@ -1,6 +1,7 @@
 # -*- coding:UTF-8 -*-
 """
-tesing my backbone implementations
+training classifying task with CNN
+@Cai Yichao 2020_09_18
 """
 
 import os
@@ -12,6 +13,7 @@ import torch.backends.cudnn as cudnn
 from torchsummary import summary
 
 from models.resnet import *
+from models.resnext import *
 from utils.arg_utils import *
 from utils.data_utils import *
 from utils.progress_utils import progress_bar
@@ -35,7 +37,8 @@ print('Task classes are: ', classes)
 model
 """
 print("==> building model...")
-net = ResNet_50(num_classes=2)
+# net = ResNet_50(num_classes=2)
+net = resNeXt50_32x4d_SE(num_classes=2)
 summary(net, (3, 224, 224))
 
 net = net.to(device)
@@ -89,7 +92,6 @@ def test(epoch):
             print(targets)
             total += targets.size(0)
             correct += predicted.eq(targets).sum().item()
-
 
             progress_bar(index, len(test_loader), 'Loss: %.3f | Acc: %.3f%% (%d/%d)'
                          %(loss/(index+1), 100.*correct/total, correct, total))

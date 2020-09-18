@@ -68,10 +68,10 @@ def VGG_16():
 def VGG_19():
     return VGG([2, 2, 4, 4, 4], num_classes=1000)
 
-def test():
-    # net = VGG_11()
-    # net = VGG_13()
-    # net = VGG_16()
-    net = VGG_19()
-    summary(net, (3, 224, 224))
-# test()
+# def test():
+#     # net = VGG_11()
+#     # net = VGG_13()
+#     # net = VGG_16()
+#     net = VGG_19()
+#     summary(net, (3, 224, 224))
+# # test()

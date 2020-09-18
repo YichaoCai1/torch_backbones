@@ -9,7 +9,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torchsummary import summary
-from inception_blocks import BN_Conv2d
+from models.inception_blocks import BN_Conv2d
 
 class Inception_builder(nn.Module):
     """
@@ -119,10 +119,10 @@ def inception_v2():
     return GoogleNet("v2", num_classes=1000)
 
 
-def test():
-    net = inception_v1()
-    # net = inception_v2()
-    summary(net, (3, 224, 224))
-
-
-test()
+# def test():
+#     net = inception_v1()
+#     # net = inception_v2()
+#     summary(net, (3, 224, 224))
+#
+#
+# test()
