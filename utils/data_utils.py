@@ -18,7 +18,7 @@ def gen_train_loader(path, input_size, batch_size):
         transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
     ]))
     loader = torch.utils.data.DataLoader(train_set, batch_size=batch_size, shuffle=True)
-    return loader
+    return loader, train_set.class_to_idx
 
 
 def gen_test_loader(path, input_size, batch_size):
@@ -28,5 +28,5 @@ def gen_test_loader(path, input_size, batch_size):
         transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
     ]))
     loader = torch.utils.data.DataLoader(test_set, batch_size=batch_size, shuffle=True)
-    return loader
+    return loader, test_set.class_to_idx
 

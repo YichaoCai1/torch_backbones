@@ -17,34 +17,37 @@ from models.resnext import *
 from utils.arg_utils import *
 from utils.data_utils import *
 from utils.progress_utils import progress_bar
+from utils.earlystopping import EarlyStopping
 
 """
-loading args
+arguments
 """
 args = fetch_args()
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
+early_stopping = EarlyStopping(args['patience'], verbose=True, delta=args['delta'])
 
 """
 loading data-set....
 """
 print("==> loading data-set...")
-train_loader = gen_train_loader(args['train_path'], args['input_size'], args['train_batch_size'])
-test_loader = gen_test_loader(args['test_path'], args['input_size'], args['test_batch_size'])
-classes = args['classes']
+train_loader, classes = gen_train_loader(args['train_path'], args['input_size'], args['train_batch_size'])
+test_loader, _ = gen_test_loader(args['test_path'], args['input_size'], args['test_batch_size'])
 print('Task classes are: ', classes)
+num_classes = len(classes)
+print(num_classes)
 
 """
 model
 """
 print("==> building model...")
 # net = ResNet_50(num_classes=2)
-net = resNeXt50_32x4d_SE(num_classes=2)
+net = resNeXt50_32x4d_SE(num_classes=num_classes)
+net = net.to(device)
 summary(net, (3, 224, 224))
 
-net = net.to(device)
-if device is 'cuda':
-    net = torch.nn.DataParallel(net)
-    cudnn.benchmark = True
+# if device is 'cuda':
+#     net = torch.nn.DataParallel(net)
+#     cudnn.benchmark = True
 
 """
 training
@@ -76,6 +79,8 @@ def train(epoch):
 
 
 best_acc = 0
+
+
 def test(epoch):
     global best_acc
     net.eval()
@@ -96,20 +101,30 @@ def test(epoch):
             progress_bar(index, len(test_loader), 'Loss: %.3f | Acc: %.3f%% (%d/%d)'
                          %(loss/(index+1), 100.*correct/total, correct, total))
 
+    eval_loss = loss/(index+1)
     acc = 100.*correct/total
-    if acc > best_acc:
+    if acc >= best_acc:
         print("Saving checkpoints..")
         state = {
             'net': net.state_dict(),
             'acc': acc,
             'epoch': epoch,
+            'eval_loss': eval_loss
         }
         if not os.path.isdir(args['ckpt_path']):
             os.mkdir(args['ckpt_path'])
-        torch.save(state, str('./checkpoint/ckpt_%d_acc%.2f.t7' % (epoch, acc)))
+        torch.save(state, args['ckpt_path'] + str('/ckpt_%d_acc%.2f.pt' % (epoch, acc)))
         best_acc = acc
+
+    return eval_loss
 
 
 for epoch in range(args['epochs']):
     train(epoch)
-    test(epoch)
+    eval_loss = test(epoch)
+
+    # early stopping
+    early_stopping(eval_loss, net)
+    if early_stopping.early_stop:
+        print("Early stopping.")
+        break
