@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="root@192.168.14.225">
+    <serverData>
+      <paths name="root@192.168.14.225">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/cyc_work/yolov4-pytorch-master" local="F:/Tellhow/yolov4-pytorch-master" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>

@@ -9,7 +9,9 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torchsummary import summary
-from models.inception_blocks import BN_Conv2d
+
+from models.blocks.conv_bn_relu import BN_Conv2d
+
 
 class Inception_builder(nn.Module):
     """
@@ -117,7 +119,6 @@ def inception_v1():
 
 def inception_v2():
     return GoogleNet("v2", num_classes=1000)
-
 
 # def test():
 #     net = inception_v1()

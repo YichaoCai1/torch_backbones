@@ -6,38 +6,9 @@ An unofficial implementation of ResNeXt with pytorch
 import torch.nn as nn
 import torch.nn.functional as F
 from torchsummary import summary
-from models.inception_blocks import BN_Conv2d
-from models.SE_block import SE
 
-class ResNeXt_Block(nn.Module):
-    """
-    ResNeXt block with group convolutions
-    """
-
-    def __init__(self, in_chnls, cardinality, group_depth, stride, is_se=False):
-        super(ResNeXt_Block, self).__init__()
-        self.is_se = is_se
-        self.group_chnls = cardinality * group_depth
-        self.conv1 = BN_Conv2d(in_chnls, self.group_chnls, 1, stride=1, padding=0)
-        self.conv2 = BN_Conv2d(self.group_chnls, self.group_chnls, 3, stride=stride, padding=1, groups=cardinality)
-        self.conv3 = nn.Conv2d(self.group_chnls, self.group_chnls*2, 1, stride=1, padding=0)
-        self.bn = nn.BatchNorm2d(self.group_chnls*2)
-        if self.is_se:
-            self.se = SE(self.group_chnls*2, 16)
-        self.short_cut = nn.Sequential(
-            nn.Conv2d(in_chnls, self.group_chnls*2, 1, stride, 0, bias=False),
-            nn.BatchNorm2d(self.group_chnls*2)
-        )
-
-    def forward(self, x):
-        out = self.conv1(x)
-        out = self.conv2(out)
-        out = self.bn(self.conv3(out))
-        if self.is_se:
-            coefficient = self.se(out)
-            out *= coefficient
-        out += self.short_cut(x)
-        return F.relu(out)
+from models.blocks.conv_bn_relu import BN_Conv2d
+from models.blocks.resnext_block import ResNeXt_Block
 
 
 class ResNeXt(nn.Module):
@@ -59,14 +30,14 @@ class ResNeXt(nn.Module):
         self.conv4 = self.___make_layers(d3, layers[2], stride=2)
         d4 = d3 * 2
         self.conv5 = self.___make_layers(d4, layers[3], stride=2)
-        self.fc = nn.Linear(self.channels, num_classes)   # 224x224 input size
+        self.fc = nn.Linear(self.channels, num_classes)  # 224x224 input size
 
     def ___make_layers(self, d, blocks, stride):
-        strides = [stride] + [1] * (blocks-1)
+        strides = [stride] + [1] * (blocks - 1)
         layers = []
         for stride in strides:
             layers.append(ResNeXt_Block(self.channels, self.cardinality, d, stride, self.is_se))
-            self.channels = self.cardinality*d*2
+            self.channels = self.cardinality * d * 2
         return nn.Sequential(*layers)
 
     def forward(self, x):
@@ -105,7 +76,3 @@ def resNeXt50_32x4d_SE(num_classes=1000):
 #     summary(net, (3, 224, 224))
 #
 # test()
-
-
-
-

@@ -13,6 +13,7 @@ class VGG(nn.Module):
     """
     VGG builder
     """
+
     def __init__(self, arch: object, num_classes=1000) -> object:
         super(VGG, self).__init__()
         self.in_channels = 3
@@ -21,7 +22,7 @@ class VGG(nn.Module):
         self.conv3_256 = self.__make_layer(256, arch[2])
         self.conv3_512a = self.__make_layer(512, arch[3])
         self.conv3_512b = self.__make_layer(512, arch[4])
-        self.fc1 = nn.Linear(7*7*512, 4096)
+        self.fc1 = nn.Linear(7 * 7 * 512, 4096)
         self.bn1d = nn.BatchNorm1d(4096)
         self.fc2 = nn.Linear(4096, 4096)
         self.fc3 = nn.Linear(4096, num_classes)
@@ -59,11 +60,14 @@ class VGG(nn.Module):
 def VGG_11():
     return VGG([1, 1, 2, 2, 2], num_classes=1000)
 
+
 def VGG_13():
     return VGG([1, 1, 2, 2, 2], num_classes=1000)
 
+
 def VGG_16():
     return VGG([2, 2, 3, 3, 3], num_classes=1000)
+
 
 def VGG_19():
     return VGG([2, 2, 4, 4, 4], num_classes=1000)

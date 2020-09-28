@@ -8,7 +8,9 @@ Inception-ResNet-v1, Inception-ResNet-v2 with pytorch
 import torch.nn as nn
 import torch.nn.functional as F
 from torchsummary import summary
-from models.inception_blocks import *
+
+from models.blocks.conv_bn_relu import BN_Conv2d
+from models.blocks.inception_blocks import *
 
 
 class Inception(nn.Module):
@@ -47,18 +49,18 @@ class Inception(nn.Module):
 
     def __make_reduction_A(self):
         if self.version == "v4":
-            return Reduction_A(384, 192, 224, 256, 384) # 1024
+            return Reduction_A(384, 192, 224, 256, 384)  # 1024
         elif self.version == "res1":
-            return Reduction_A(256, 192, 192, 256, 384) # 896
+            return Reduction_A(256, 192, 192, 256, 384)  # 896
         else:
-            return Reduction_A(384, 256, 256, 384, 384) # 1152
+            return Reduction_A(384, 256, 256, 384, 384)  # 1152
 
     def __make_inception_B(self):
         layers = []
         if self.version == "v4":
             for _ in range(7):
                 layers.append(Inception_B(1024, 128, 384, 192, 224, 256,
-                                          192, 192, 224, 224, 256))   # 1024
+                                          192, 192, 224, 224, 256))  # 1024
         elif self.version == "res1":
             for _ in range(10):
                 layers.append(Inception_B_res(896, 128, 128, 128, 128, 896))  # 896
@@ -114,7 +116,6 @@ def inception_resnet_v1(classes=1000):
 def inception_resnet_v2(classes=1000):
     return Inception("res2", classes)
 
-
 # def test():
 #     net = inception_v4()
 #     # net = inception_resnet_v1()
@@ -122,5 +123,3 @@ def inception_resnet_v2(classes=1000):
 #     summary(net, (3, 299, 299))
 #
 # test()
-
-

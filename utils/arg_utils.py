@@ -13,5 +13,3 @@ def fetch_args():
         args = f.read()
         args = yaml.load(args)
         return args
-
-

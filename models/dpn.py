@@ -7,36 +7,9 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torchsummary import summary
-from models.inception_blocks import BN_Conv2d
 
-class DPN_Block(nn.Module):
-    """
-    Dual Path block
-    """
-
-    def __init__(self, in_chnls, add_chnl, cat_chnl, cardinality, d, stride):
-        super(DPN_Block, self).__init__()
-        self.add = add_chnl
-        self.cat = cat_chnl
-        self.chnl = cardinality * d
-        self.conv1 = BN_Conv2d(in_chnls, self.chnl, 1, 1, 0)
-        self.conv2 = BN_Conv2d(self.chnl, self.chnl, 3, stride, 1, groups=cardinality)
-        self.conv3 = nn.Conv2d(self.chnl, add_chnl + cat_chnl, 1, 1, 0)
-        self.bn = nn.BatchNorm2d(add_chnl + cat_chnl)
-        self.shortcut = nn.Sequential()
-        if add_chnl != in_chnls:
-            self.shortcut = nn.Sequential(
-                nn.Conv2d(in_chnls, add_chnl, 1, stride, 0),
-                nn.BatchNorm2d(add_chnl)
-            )
-
-    def forward(self, x):
-        out = self.conv1(x)
-        out = self.conv2(out)
-        out = self.bn(self.conv3(out))
-        add = out[:, :self.add, :, :] + self.shortcut(x)
-        out = torch.cat((add, out[:, self.add:, :, :]), dim=1)
-        return F.relu(out)
+from models.blocks.conv_bn_relu import BN_Conv2d
+from models.blocks.dpn_block import DPN_Block
 
 
 class DPN(nn.Module):
@@ -58,7 +31,7 @@ class DPN(nn.Module):
 
     def __make_layers(self, block, add_chnl, cat_chnl, d, stride):
         layers = []
-        strides = [stride] + [1] * (block-1)
+        strides = [stride] + [1] * (block - 1)
         for i, s in enumerate(strides):
             layers.append(DPN_Block(self.chnl, add_chnl, cat_chnl, self.cdty, d, s))
             self.chnl = add_chnl + cat_chnl
@@ -110,7 +83,6 @@ def dpn_131_40_4d(num_classes=1000):
                cardinality=40,
                d=5,
                num_classes=num_classes)
-
 
 # def test():
 #     # net = dpn_92_32x3d()

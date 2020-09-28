@@ -14,6 +14,7 @@ from torchsummary import summary
 
 from models.resnet import *
 from models.resnext import *
+from models.densenet import *
 from utils.arg_utils import *
 from utils.data_utils import *
 from utils.progress_utils import progress_bar
@@ -26,6 +27,7 @@ args = fetch_args()
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 early_stopping = EarlyStopping(args['patience'], verbose=True, delta=args['delta'])
 
+
 """
 loading data-set....
 """
@@ -36,18 +38,21 @@ print('Task classes are: ', classes)
 num_classes = len(classes)
 print(num_classes)
 
+
 """
 model
 """
 print("==> building model...")
 # net = ResNet_50(num_classes=2)
-net = resNeXt50_32x4d_SE(num_classes=num_classes)
+# net = resNeXt50_32x4d_SE(num_classes=num_classes)
+net = densenet_121(num_classes=num_classes)
 net = net.to(device)
 summary(net, (3, 224, 224))
 
 # if device is 'cuda':
 #     net = torch.nn.DataParallel(net)
 #     cudnn.benchmark = True
+
 
 """
 training
@@ -89,7 +94,6 @@ def test(epoch):
     with torch.no_grad():
         for index, (inputs, targets) in enumerate(test_loader):
             inputs, targets = inputs.to(device), targets.to(device)
-            outputs = net(inputs)
             loss_curr = criterion(outputs, targets)
 
             loss += loss_curr.item()

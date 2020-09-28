@@ -8,23 +8,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-
-class BN_Conv2d(nn.Module):
-    """
-    BN_CONV_RELU
-    """
-
-    def __init__(self, in_channels: object, out_channels: object, kernel_size: object, stride: object, padding: object,
-                 dilation=1, groups=1, bias=False) -> object:
-        super(BN_Conv2d, self).__init__()
-        self.seq = nn.Sequential(
-            nn.Conv2d(in_channels, out_channels, kernel_size=kernel_size, stride=stride,
-                      padding=padding, dilation=dilation, groups=groups, bias=bias),
-            nn.BatchNorm2d(out_channels)
-        )
-
-    def forward(self, x):
-        return F.relu(self.seq(x))
+from models.blocks.conv_bn_relu import BN_Conv2d
 
 
 class Stem_v4_Res2(nn.Module):
@@ -285,7 +269,7 @@ class Inception_A_res(nn.Module):
             BN_Conv2d(b3_n1, b3_n3_1, 3, 1, 1, bias=False),
             BN_Conv2d(b3_n3_1, b3_n3_2, 3, 1, 1, bias=False)
         )
-        self.conv_linear = nn.Conv2d(b1+b2_n3+b3_n3_2, n1_linear, 1, 1, 0, bias=True)
+        self.conv_linear = nn.Conv2d(b1 + b2_n3 + b3_n3_2, n1_linear, 1, 1, 0, bias=True)
 
         self.short_cut = nn.Sequential()
         if in_channels != n1_linear:
@@ -318,7 +302,7 @@ class Inception_B_res(nn.Module):
             BN_Conv2d(b2_n1, b2_n1x7, (1, 7), (1, 1), (0, 3), bias=False),
             BN_Conv2d(b2_n1x7, b2_n7x1, (7, 1), (1, 1), (3, 0), bias=False)
         )
-        self.conv_linear = nn.Conv2d(b1+b2_n7x1, n1_linear, 1, 1, 0, bias=False)
+        self.conv_linear = nn.Conv2d(b1 + b2_n7x1, n1_linear, 1, 1, 0, bias=False)
         self.short_cut = nn.Sequential()
         if in_channels != n1_linear:
             self.short_cut = nn.Sequential(

@@ -3,39 +3,13 @@
 An unofficial implementation of DenseNet with pytorch
 @Cai Yichao 2020_09_15
 """
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torchsummary import summary
-from models.inception_blocks import BN_Conv2d
 
-
-class DenseBlock(nn.Module):
-
-    def __init__(self, input_channels, num_layers, growth_rate):
-        super(DenseBlock, self).__init__()
-        self.num_layers = num_layers
-        self.k0 = input_channels
-        self.k = growth_rate
-        self.layers = self.__make_layers()
-
-    def __make_layers(self):
-        layer_list = []
-        for i in range(self.num_layers):
-            layer_list.append(nn.Sequential(
-                BN_Conv2d(self.k0+i*self.k, 4*self.k, 1, 1, 0),
-                BN_Conv2d(4 * self.k, self.k, 3, 1, 1)
-            ))
-        return layer_list
-
-    def forward(self, x):
-        feature = self.layers[0](x)
-        out = torch.cat((x, feature), 1)
-        for i in range(1, len(self.layers)):
-            feature = self.layers[i](out)
-            out = torch.cat((feature, out), 1)
-        return out
+from models.blocks.conv_bn_relu import BN_Conv2d
+from models.blocks.dense_block import DenseBlock
 
 
 class DenseNet(nn.Module):
@@ -47,12 +21,12 @@ class DenseNet(nn.Module):
         self.k = k
         self.theta = theta
         # layers
-        self.conv = BN_Conv2d(3, 2*k, 7, 2, 3)
-        self.blocks, patches = self.__make_blocks(2*k)
+        self.conv = BN_Conv2d(3, 2 * k, 7, 2, 3)
+        self.blocks, patches = self.__make_blocks(2 * k)
         self.fc = nn.Linear(patches, num_classes)
 
     def __make_transition(self, in_chls):
-        out_chls = int(self.theta*in_chls)
+        out_chls = int(self.theta * in_chls)
         return nn.Sequential(
             BN_Conv2d(in_chls, out_chls, 1, 1, 0),
             nn.AvgPool2d(2)
@@ -68,8 +42,8 @@ class DenseNet(nn.Module):
         patches = 0
         for i in range(len(self.layers)):
             layers_list.append(DenseBlock(k0, self.layers[i], self.k))
-            patches = k0+self.layers[i]*self.k      # output feature patches from Dense Block
-            if i != len(self.layers)-1:
+            patches = k0 + self.layers[i] * self.k  # output feature patches from Dense Block
+            if i != len(self.layers) - 1:
                 transition, k0 = self.__make_transition(patches)
                 layers_list.append(transition)
         return nn.Sequential(*layers_list), patches
@@ -110,4 +84,5 @@ def densenet_264(num_classes=1000):
 #     y = net(x)
 #     print(y.shape)
 #
-# # test()
+#
+# test()
