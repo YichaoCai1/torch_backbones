@@ -20,6 +20,8 @@
   · Inception-v1，Inception-v2，Inception-v3：https://blog.csdn.net/EasonCcc/article/details/108521180
 
   · Inception-v4，Inception-ResNet：https://blog.csdn.net/EasonCcc/article/details/108540687
+  
+  · DarkNet: https://blog.csdn.net/EasonCcc/article/details/108845446
 
   · ResNeXt: https://blog.csdn.net/EasonCcc/article/details/108580508
   
@@ -28,4 +30,8 @@
   · DPN：https://blog.csdn.net/EasonCcc/article/details/108627421
   
   · SE block：https://blog.csdn.net/EasonCcc/article/details/108649071
+  
+  · CSPNet：https://blog.csdn.net/EasonCcc/article/details/108851754
+  
+  · CSP-DarkNet：https://blog.csdn.net/EasonCcc/article/details/108879514
   

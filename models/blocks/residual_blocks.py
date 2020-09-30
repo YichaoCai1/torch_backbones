@@ -6,7 +6,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 from models.blocks.SE_block import SE
-from models.blocks.conv_bn_relu import BN_Conv2d
+from models.blocks.conv_bn import BN_Conv2d, BN_Conv2d_Leaky
 
 
 class BasicBlock(nn.Module):
@@ -86,19 +86,16 @@ class BottleNeck(nn.Module):
 
 class Dark_block(nn.Module):
     """block for darknet"""
-    def __init__(self, inchannels, outchannels, is_se=False):
+    def __init__(self, channels, is_se=False, inner_channels=None):
         super(Dark_block, self).__init__()
         self.is_se = is_se
-        self.conv1 = BN_Conv2d(inchannels, outchannels//2, 1, 1, 0)
-        self.conv2 = nn.Conv2d(outchannels//2, outchannels, 3, 1, 1)
-        self.bn = nn.BatchNorm2d(outchannels)
+        if inner_channels is None:
+            inner_channels = channels // 2
+        self.conv1 = BN_Conv2d_Leaky(channels, inner_channels, 1, 1, 0)
+        self.conv2 = nn.Conv2d(inner_channels, channels, 3, 1, 1)
+        self.bn = nn.BatchNorm2d(channels)
         if self.is_se:
-            self.se = SE(outchannels, 16)
-
-        self.shortcut = nn.Sequential(
-            nn.Conv2d(inchannels, outchannels, 1, 1, 0),
-            nn.BatchNorm2d(outchannels)
-        )
+            self.se = SE(channels, 16)
 
     def forward(self, x):
         out = self.conv1(x)
@@ -107,5 +104,5 @@ class Dark_block(nn.Module):
         if self.is_se:
             coefficient = self.se(out)
             out *= coefficient
-        out += self.shortcut(x)
-        return F.relu(out)
+        out += x
+        return F.leaky_relu(out)

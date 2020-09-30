@@ -8,7 +8,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torchsummary import summary
 
-from models.blocks.conv_bn_relu import BN_Conv2d
+from models.blocks.conv_bn import BN_Conv2d
 from models.blocks.dpn_block import DPN_Block
 
 

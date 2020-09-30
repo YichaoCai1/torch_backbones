@@ -7,15 +7,17 @@ An unofficial implementation of Darknet with pytorch
 import torch.nn as nn
 import torch.nn.functional as F
 from torchsummary import summary
-from models.blocks.conv_bn_relu import BN_Conv2d
+from models.blocks.conv_bn import BN_Conv2d
 from models.blocks.residual_blocks import Dark_block
 
 
 class DarkNet(nn.Module):
 
-    def __init__(self, filters: object, layers: object, num_classes, is_se=False) -> object:
+    def __init__(self, layers: object, num_classes, is_se=False) -> object:
         super(DarkNet, self).__init__()
         self.is_se = is_se
+        filters = [64, 128, 256, 512, 1024]
+
         self.conv1 = BN_Conv2d(3, 32, 3, 1, 1)
         self.redu1 = BN_Conv2d(32, 64, 3, 2, 1)
         self.conv2 = self.__make_layers(filters[0], layers[0])
@@ -33,7 +35,7 @@ class DarkNet(nn.Module):
     def __make_layers(self, num_filter, num_layers):
         layers = []
         for _ in range(num_layers):
-            layers.append(Dark_block(num_filter, num_filter, self.is_se))
+            layers.append(Dark_block(num_filter, self.is_se))
         return nn.Sequential(*layers)
 
     def forward(self, x):
@@ -54,8 +56,8 @@ class DarkNet(nn.Module):
         return F.softmax(out)
 
 
-def darknet_53(num_classes = 1000):
-    return DarkNet([64, 128, 256, 512, 1024], [1, 2, 8, 8, 4], num_classes)
+def darknet_53(num_classes=1000):
+    return DarkNet([1, 2, 8, 8, 4], num_classes)
 
 
 # def test():

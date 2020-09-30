@@ -8,7 +8,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from models.blocks.conv_bn_relu import BN_Conv2d
+from models.blocks.conv_bn import BN_Conv2d
 
 
 class Stem_v4_Res2(nn.Module):

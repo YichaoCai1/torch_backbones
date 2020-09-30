@@ -6,7 +6,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 from models.blocks.SE_block import SE
-from models.blocks.conv_bn_relu import BN_Conv2d
+from models.blocks.conv_bn import BN_Conv2d
 
 
 class ResNeXt_Block(nn.Module):
