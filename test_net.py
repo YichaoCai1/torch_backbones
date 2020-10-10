@@ -4,21 +4,10 @@ from models.densenet import *
 from models.darknet import *
 from models.csp_resnext import csp_resnext_50_32x4d
 from models.csp_darknet import csp_darknet_53
+from models.shufflenet_v2 import *
 
-# net = densenet_201(num_classes=1000)
-# stat(net, (3, 224, 224))
-#
-# net = csp_densenet_201(num_classes=1000)
-# stat(net, (3, 224, 224))
-
-# net = darknet_53()
-# summary(net, (3, 224, 224))
-
-# net = csp_resnext_50_32x4d()
-# summary(net, (3, 256, 256))
-
-net = csp_darknet_53()
-summary(net, (3, 256, 256))
+net = shufflenet_1x_se_res()
+summary(net, (3, 224, 224))
 
 # import torch
 # import torch.nn.functional as F

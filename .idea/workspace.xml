@@ -20,25 +20,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eda9c890-e69d-4d4f-bc8a-fbf35db70d56" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/models/blocks/conv_bn.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/csp_darknet.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/csp_resnext.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_net.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/blocks/shuffle_block.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/shufflenet_v2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/blocks/conv_bn_relu.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/blocks/dense_block.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/blocks/dense_block.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/blocks/dpn_block.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/blocks/dpn_block.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/blocks/inception_blocks.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/blocks/inception_blocks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/blocks/residual_blocks.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/blocks/residual_blocks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/blocks/resnext_block.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/blocks/resnext_block.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/darknet.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/darknet.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/densenet.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/densenet.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/dpn.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/dpn.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/googlenet.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/googlenet.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/inception_v3.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/inception_v3.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/inception_v4_resnet.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/inception_v4_resnet.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/resnext.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/resnext.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/blocks/conv_bn.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/blocks/conv_bn.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_net.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_net.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +55,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="F:/Tellhow/yolov4-pytorch-master" />
+    <property name="last_opened_file_path" value="F:/Tellhow/1_code/image-torch-classifier" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
@@ -96,7 +82,8 @@
       <workItem from="1601200974420" duration="949000" />
       <workItem from="1601257178574" duration="19142000" />
       <workItem from="1601340577590" duration="12929000" />
-      <workItem from="1601426485457" duration="10540000" />
+      <workItem from="1601426485457" duration="12399000" />
+      <workItem from="1602292401289" duration="14378000" />
     </task>
     <servers />
   </component>
@@ -132,10 +119,10 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="414" y="180" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1601189800306" />
-    <state x="740" y="280" key="FileChooserDialogImpl" timestamp="1601193208946">
+    <state x="740" y="280" key="FileChooserDialogImpl" timestamp="1601446870855">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="740" y="280" key="FileChooserDialogImpl/0.0.1920.1050@0.0.1920.1050" timestamp="1601193208946" />
+    <state x="740" y="280" key="FileChooserDialogImpl/0.0.1920.1050@0.0.1920.1050" timestamp="1601446870855" />
     <state x="461" y="169" key="SettingsEditor" timestamp="1601192602244">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
@@ -144,5 +131,9 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="838" y="255" width="418" height="539" key="ftp.server.browser/0.0.1920.1050@0.0.1920.1050" timestamp="1601193117542" />
+    <state x="623" y="227" width="672" height="678" key="search.everywhere.popup" timestamp="1602297727738">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="623" y="227" width="672" height="678" key="search.everywhere.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1602297727738" />
   </component>
 </project>
