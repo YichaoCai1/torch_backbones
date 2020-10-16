@@ -18,9 +18,8 @@ class BasicBlock(nn.Module):
     def __init__(self, in_channels, out_channels, strides, is_se=False):
         super(BasicBlock, self).__init__()
         self.is_se = is_se
-        self.conv1 = nn.Conv2d(in_channels, out_channels, 3, stride=strides, padding=1, bias=False)  # same padding
-        self.conv2 = nn.Conv2d(out_channels, out_channels, 3, stride=1, padding=1, bias=False)
-        self.bn = nn.BatchNorm2d(out_channels)
+        self.conv1 = BN_Conv2d(in_channels, out_channels, 3, stride=strides, padding=1, bias=False)  # same padding
+        self.conv2 = BN_Conv2d(out_channels, out_channels, 3, stride=1, padding=1, bias=False, activation=None)
         if self.is_se:
             self.se = SE(out_channels, 16)
 
@@ -34,14 +33,11 @@ class BasicBlock(nn.Module):
 
     def forward(self, x):
         out = self.conv1(x)
-        out = self.bn(out)
-        out = F.relu(out)
         out = self.conv2(out)
-        out = self.bn(out)
         if self.is_se:
             coefficient = self.se(out)
-            out *= coefficient
-        out += self.short_cut(x)
+            out = out * coefficient
+        out = out + self.short_cut(x)
         return F.relu(out)
 
 
@@ -54,11 +50,9 @@ class BottleNeck(nn.Module):
     def __init__(self, in_channels, out_channels, strides, is_se=False):
         super(BottleNeck, self).__init__()
         self.is_se = is_se
-        self.conv1 = nn.Conv2d(in_channels, out_channels, 1, stride=1, padding=0, bias=False)  # same padding
-        self.conv2 = nn.Conv2d(out_channels, out_channels, 3, stride=strides, padding=1, bias=False)
-        self.conv3 = nn.Conv2d(out_channels, out_channels * 4, 1, stride=1, padding=0, bias=False)
-        self.bn1 = nn.BatchNorm2d(out_channels)
-        self.bn2 = nn.BatchNorm2d(out_channels * 4)
+        self.conv1 = BN_Conv2d(in_channels, out_channels, 1, stride=1, padding=0, bias=False)  # same padding
+        self.conv2 = BN_Conv2d(out_channels, out_channels, 3, stride=strides, padding=1, bias=False)
+        self.conv3 = BN_Conv2d(out_channels, out_channels * 4, 1, stride=1, padding=0, bias=False, activation=None)
         if self.is_se:
             self.se = SE(out_channels * 4, 16)
 
@@ -70,17 +64,12 @@ class BottleNeck(nn.Module):
 
     def forward(self, x):
         out = self.conv1(x)
-        out = self.bn1(out)
-        out = F.relu(out)
         out = self.conv2(out)
-        out = self.bn1(out)
-        out = F.relu(out)
         out = self.conv3(out)
-        out = self.bn2(out)
         if self.is_se:
             coefficient = self.se(out)
-            out *= coefficient
-        out += self.shortcut(x)
+            out = out * coefficient
+        out = out + self.shortcut(x)
         return F.relu(out)
 
 
