@@ -21,7 +21,8 @@
   <component name="ChangeListManager">
     <list default="true" id="eda9c890-e69d-4d4f-bc8a-fbf35db70d56" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/blocks/residual_blocks.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/blocks/residual_blocks.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/vgg.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/vgg.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_net.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_net.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,7 +83,8 @@
       <workItem from="1601426485457" duration="12399000" />
       <workItem from="1602292401289" duration="15794000" />
       <workItem from="1602491351263" duration="253000" />
-      <workItem from="1602840318854" duration="30000" />
+      <workItem from="1602840318854" duration="203000" />
+      <workItem from="1603078723724" duration="262000" />
     </task>
     <servers />
   </component>

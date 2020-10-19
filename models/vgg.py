@@ -23,7 +23,8 @@ class VGG(nn.Module):
         self.conv3_512a = self.__make_layer(512, arch[3])
         self.conv3_512b = self.__make_layer(512, arch[4])
         self.fc1 = nn.Linear(7 * 7 * 512, 4096)
-        self.bn1d = nn.BatchNorm1d(4096)
+        self.bn1 = nn.BatchNorm1d(4096)
+        self.bn2 = nn.BatchNorm1d(4096)
         self.fc2 = nn.Linear(4096, 4096)
         self.fc3 = nn.Linear(4096, num_classes)
 
@@ -49,10 +50,10 @@ class VGG(nn.Module):
         out = F.max_pool2d(out, 2)
         out = out.view(out.size(0), -1)
         out = self.fc1(out)
-        out = self.bn1d(out)
+        out = self.bn1(out)
         out = F.relu(out)
         out = self.fc2(out)
-        out = self.bn1d(out)
+        out = self.bn2(out)
         out = F.relu(out)
         return F.softmax(self.fc3(out))
 
