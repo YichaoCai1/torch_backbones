@@ -6,11 +6,15 @@ from models.vgg import *
 from models.csp_resnext import csp_resnext_50_32x4d
 from models.csp_darknet import csp_darknet_53
 from models.shufflenet_v2 import *
+from models.mnasnet import MnasNet_A1
 
 # net = shufflenet_1x_se_res()
 # summary(net, (3, 224, 224))
 
-net = VGG_19()
+# net = VGG_19()
+# summary(net, (3, 224, 224))
+
+net = MnasNet_A1()
 summary(net, (3, 224, 224))
 
 # import torch
