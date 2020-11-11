@@ -40,19 +40,15 @@ class DPN(nn.Module):
     def forward(self, x):
         out = self.conv1(x)
         out = F.max_pool2d(out, 3, 2, 1)
-        print("shape 1---->", out.shape)
         out = self.conv2(out)
-        print("shape 2---->", out.shape)
         out = self.conv3(out)
-        print("shape 3---->", out.shape)
         out = self.conv4(out)
-        print("shape 4---->", out.shape)
         out = self.conv5(out)
-        print("shape 5---->", out.shape)
         out = F.avg_pool2d(out, 7)
         out = out.view(out.size(0), -1)
         out = self.fc(out)
-        return F.softmax(out)
+        # return F.softmax(out)
+        return out
 
 
 def dpn_92_32x3d(num_classes=1000):
