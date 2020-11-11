@@ -106,7 +106,8 @@ class GoogleNet(nn.Module):
         out = F.dropout(out, 0.4, training=self.training)
         out = out.view(out.size(0), -1)
         out = self.fc(out)
-        return F.softmax(out)
+        # return F.softmax(out)
+        return out
 
 
 # class Inception_v3(nn.Module):
