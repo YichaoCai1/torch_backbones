@@ -59,7 +59,8 @@ class ShuffleNet_v2(nn.Module):
         out = self.body(x)
         out = out.view(out.size(0), -1)
         out = self.fc(out)
-        return F.softmax(out)
+        # return F.softmax(out)
+        return out
 
 
 """
