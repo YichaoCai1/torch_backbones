@@ -59,7 +59,7 @@ class ResNet(nn.Module):
         out = self.conv5_x(out)
         out = self.pool2(out)
         out = out.view(out.size(0), -1)
-        out = F.softmax(self.fc(out))
+        # out = F.softmax(self.fc(out))
         return out
 
 
