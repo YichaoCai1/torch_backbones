@@ -91,5 +91,4 @@ class DSampling(nn.Module):
 
         # concatenate
         out = torch.cat((out_l, out_r), 1)
-        out = shuffle_chnls(out, self.groups)
         return shuffle_chnls(out, self.groups)
