@@ -1,0 +1,9 @@
+The path names should be the same as class labels.
+
+dataset/train
+    -class_a
+    -class_b
+
+dataset/test
+    -class_a
+    -class_b
