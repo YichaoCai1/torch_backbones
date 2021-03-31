@@ -10,7 +10,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torchsummary import summary
 
-from blocks.residual_blocks import BasicBlock, BottleNeck
+from models.blocks.residual_blocks import BasicBlock, BottleNeck
 
 
 class ResNet(nn.Module):
@@ -89,15 +89,15 @@ def ResNet_50_SE(num_classes=1000):
     return ResNet(block=BottleNeck, groups=[3, 4, 6, 3], num_classes=num_classes, is_se=True)
 
 # def test():
-#     # net = ResNet_18()
-#     net = ResNet_34()
+#     net = ResNet_18()
+#     # net = ResNet_34()
 #     # net = ResNet_50()
 #     # net = ResNet_101()
 #     # net = ResNet_152()
 #     # net = ResNet_50_SE()
 #     # net = ResNet_50()
+    
 #     summary(net, (3, 224, 224))
-
 #     # net = torchvision.models.resnet34(pretrained=False)
 #     # print(net)
 #     # summary(net, (3, 224, 224))

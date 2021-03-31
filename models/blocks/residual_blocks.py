@@ -5,8 +5,8 @@
 import torch.nn as nn
 import torch.nn.functional as F
 
-from blocks.SE_block import SE
-from blocks.conv_bn import BN_Conv2d, BN_Conv2d_Leaky
+from models.blocks.SE_block import SE
+from models.blocks.conv_bn import BN_Conv2d, BN_Conv2d_Leaky
 
 
 class BasicBlock(nn.Module):
