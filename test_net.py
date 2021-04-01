@@ -10,7 +10,7 @@ from models.mnasnet import MnasNet_A1
 # net = ResNet_50()
 # summary(net, (3, 224, 224))
 
-net = ResNet_50()
+net = csp_resnext_50_32x4d()
 summary(net, (3, 224, 224))
 
 # net = densenet_201(num_classes=1000)

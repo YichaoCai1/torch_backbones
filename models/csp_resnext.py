@@ -46,6 +46,7 @@ class Stem(nn.Module):
         self.c1 = in_channels - in_channels // 2
         self.hidden_channels = cardinality * group_with
         self.out_channels = self.hidden_channels * 2
+        self.transition = BN_Conv2d_Leaky(self.hidden_channels, in_channels, 1, 1, 0) # trial
         self.trans_part0 = nn.Sequential(BN_Conv2d_Leaky(self.c0, self.hidden_channels, 1, 1, 0), nn.AvgPool2d(stride))
         self.block = self.__make_block(num_blocks, self.c1, cardinality, group_with, stride)
         self.trans_part1 = BN_Conv2d_Leaky(self.hidden_channels, self.hidden_channels, 1, 1, 0)
@@ -58,6 +59,7 @@ class Stem(nn.Module):
                                for c, s in zip(channels, strides)])
 
     def forward(self, x):
+        x = self.transition(x)
         x0 = x[:, :self.c0, :, :]
         x1 = x[:, self.c0:, :, :]
         out0 = self.trans_part0(x0)
@@ -95,3 +97,4 @@ class CSP_ResNeXt(nn.Module):
 
 def csp_resnext_50_32x4d(num_classes=1000):
     return CSP_ResNeXt([3, 4, 6, 3], 32, 4, num_classes)
+
