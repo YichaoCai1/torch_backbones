@@ -19,6 +19,9 @@ from utils.arg_utils import *
 from utils.data_utils import *
 from utils.progress_utils import progress_bar
 from utils.earlystopping import EarlyStopping
+import mlflow
+mlflow.set_tracking_uri("http://0.0.0.0:5002")
+mlflow.set_experiment("train-trial")
 
 """
 arguments
@@ -60,6 +63,9 @@ training
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.SGD(net.parameters(), lr=args['learning_rate'], momentum=0.9, weight_decay=5e-4)
 
+def log_scalar(name, value, step):
+    """Log a scalar value to both MLflow"""
+    mlflow.log_metric(name, value)
 
 def train(epoch):
     print('\nEpoch:[%d/%d]' % (epoch, args['epochs']))
@@ -81,7 +87,8 @@ def train(epoch):
 
         progress_bar(index, len(train_loader), 'Loss: %.3f | Acc: %.3f%% (%d/%d)'
                      % (loss / (index + 1), 100. * correct / total, correct, total))
-
+        
+        log_scalar("train_loss", loss / (index + 1), epoch)
 
 best_acc = 0
 
@@ -120,16 +127,30 @@ def test(epoch):
             os.mkdir(args['ckpt_path'])
         torch.save(state, args['ckpt_path'] + str('/ckpt_%d_acc%.2f.pt' % (epoch, acc)))
         best_acc = acc
+    log_scalar("eval_loss", eval_loss, epoch)
+    log_scalar("eval_acc", acc, epoch)
 
     return eval_loss
 
 
-for epoch in range(args['epochs']):
-    train(epoch)
-    eval_loss = test(epoch)
+with mlflow.start_run():
+    # log parameters into mlflow
+    mlflow.log_param("learning_rate", args['learning_rate'])
+    mlflow.log_param("input_size", args['input_size'])
+    mlflow.log_param("train_batch_size", args['train_batch_size'])
+    mlflow.log_param("test_batch_size", args['test_batch_size'])
+    mlflow.log_param("total_epochs", args['epochs'])
+    mlflow.log_param("earlystop_patience", args['patience'])
+    mlflow.log_param("earlystop_delta", args['delta'])
 
-    # early stopping
-    early_stopping(eval_loss, net)
-    if early_stopping.early_stop:
-        print("Early stopping.")
-        break
+    for epoch in range(args['epochs']):
+        train(epoch)
+        eval_loss = test(epoch)
+
+        # early stopping
+        early_stopping(eval_loss, net)
+        if early_stopping.early_stop:
+            print("Early stopping.")
+            break
+    
+    mlflow.log_artifacts(args["ckpt_path"])

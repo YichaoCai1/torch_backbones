@@ -8,10 +8,10 @@ import torch
 import torchvision.transforms as transforms
 import torch.backends.cudnn as cudnn
 from models.resnext import *
-from utils.arg_utils import *
 from PIL import Image
-import argparse
 import time
+import argparse
+from utils.arg_utils import *
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--file', '-f', type=str)

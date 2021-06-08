@@ -1,7 +1,7 @@
 # paths
 train_path: dataset/train
 test_path: dataset/test
-ckpt_path: ckpts
+ckpt_path: torch_ckpt
 
 # taining parameters
 learning_rate: 0.01
