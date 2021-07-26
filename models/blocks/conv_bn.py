@@ -20,7 +20,7 @@ class BN_Conv2d(nn.Module):
                             padding=padding, dilation=dilation, groups=groups, bias=bias),
                   nn.BatchNorm2d(out_channels)]
         if activation:
-            layers.append(nn.ReLU(inplace=True))
+            layers.append(nn.ReLU(inplace=False))
         self.seq = nn.Sequential(*layers)
 
     def forward(self, x):
