@@ -92,7 +92,7 @@ class CSP_ResNeXt(nn.Module):
         out = self.global_pool(out)
         out = out.view(out.size(0), -1)
         out = self.fc(out)
-        return F.softmax(out)
+        return out
 
 
 def csp_resnext_50_32x4d(num_classes=1000):
