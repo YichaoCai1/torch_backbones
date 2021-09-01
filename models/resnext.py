@@ -49,7 +49,7 @@ class ResNeXt(nn.Module):
         out = self.conv5(out)
         out = F.avg_pool2d(out, 7)
         out = out.view(out.size(0), -1)
-        out = F.softmax(self.fc(out))
+        out = self.fc(out)
         return out
 
 
