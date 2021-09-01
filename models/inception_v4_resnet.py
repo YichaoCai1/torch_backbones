@@ -102,7 +102,7 @@ class Inception(nn.Module):
         out = out.view(out.size(0), -1)
         print(out.shape)
         out = self.fc(out)
-        return F.softmax(out)
+        return out
 
 
 def inception_v4(classes=1000):
