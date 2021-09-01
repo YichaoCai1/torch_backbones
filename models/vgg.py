@@ -55,7 +55,7 @@ class VGG(nn.Module):
         out = self.fc2(out)
         out = self.bn2(out)
         out = F.relu(out)
-        return F.softmax(self.fc3(out))
+        return self.fc3(out)
 
 
 def VGG_11():
