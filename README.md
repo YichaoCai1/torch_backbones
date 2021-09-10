@@ -1,6 +1,6 @@
 # torch_backbones
 - **Unofficial implementations of some classical backbone CNNs with pytorch** 
-- This is pretty much just a practicing project. If you want to do some research, I strongly recommend using official model packaged in torchvision.
+- This is pretty much just a practicing project. If you want to do some research, I strongly recommend using officially issued models in torchvision.
 
 - **Requirements**：
 
